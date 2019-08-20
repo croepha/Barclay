@@ -1,0 +1,259 @@
+
+// TODO: Actually I think we have a bug with WaitEvent() Cant remember what it was though...
+
+// TODO: debug warning to the client when they are sending multiple frames before waiting for flip
+
+// TODO: Software rendering DRI path for virtualbox...
+
+// TODO: Setup QEMU+VirGL
+
+// TODO: Write up explanation of why I want to make a new display server...
+///   Bypass politics...
+
+// TODO: Add some control codes to the input_text stream
+//     Specifically: Left, Right, Up, Down, Escape, Return=\n, Tab=\t 
+
+
+// TODO: Client with no vsync? fractional blanks 30fps,15fps
+// TODO: Client lock cursor, IE, switch to rel mouse
+// TODO: Scroll wheel
+
+// TODO: WINDOWING: Set different cursor option...
+// TODO: WINDOWING: Window Name
+// TODO: WINDOWING: Borderless
+// TODO: WINDOWING: Fullscreen
+
+
+// TODO: Client side OpenGL?
+// TODO: Global Pallette?
+// TODO: Test on RPI
+// TODO: Look into the fact that the client always gets input one frame late....
+//         A possible way to solve this problem, is to let the client opt into telling
+//         Telling the server a specific amount of time to wait before sending the input
+//         to the client, if the client chooses to wait too long, then it might miss it's
+//         V-Sync, if it waits too little, then some input events will be delayed until
+//         the next frame....
+// TODO: Make sure that keyboard leds work
+// TODO: For keyboard events, Look into support shared memory of 
+//   scancode array (double buffers)... Eh, probably not, this adds a lot
+//   of complexity, also opens up some securty issues
+// TODO: Signal handling.... Eh... maybe not? we will just assume this always runs?
+// TOOD: Game input event handling/ XBOX360 controller/ Joysick...
+// TODO: harden client IO... too many exceptional paths...
+// TODO: Clean up allocations...
+// TODO: Do actual mode setting, atomic KMS...?
+// TODO: Handle multiple monitor
+// TODO: Handle display hotplug
+// TODO: Maybe have input use /proc/bus/input/ for enumeration...
+// TODO: have a way to have an application mark content to be censored by OBS... 
+
+// TODO: Client implementation could optimize away those state copies? 
+//         pass the recv buffer directly?
+// TODO: On Minimal DRI build, link with GLESv2 instead of GL, might 
+//     have to disable some debug related extenstions.
+//      I tested this, and it does work fine, but need to play with
+//     build settings, because right now we are using a single object file
+//     for both cases.... and it really needs different headers and defines...
+// REMINDER: JUST USE VENDOR SUPPLIED MESA/DRM!!!
+//    DO NOT worry about cleaning up runtime-link dependancies
+//    its a giant mess and you could spend A LOT of time with no
+//    measurable gains, its too big of a problem to solve right now...
+
+
+
+// TODO: Loop into GL_DEBUG: API:PERFORMANCE:NOTE: `generating temporary index buffer for drawing PIPE_PRIM_TRIANGLE_FAN' 1  // OPENGLES on virtualbox
+
+// TODO: Possibly have a low power mode, when nothing needs be updated?
+//       or possibly other power tweaks, like use render to texture for everything not 
+//       on the top, and cache them?
+
+// TODO: client window size cant handle 4 4k monitors, use a u16 or s32 or even a u64, 
+//   possibly consider having the window size be a message, instead of being sent each frame
+//   Also we are using s16 for mouse positions in a lot of places...
+
+
+/*
+NOTE: 
+We are packing scancode, is pressed and input device id into one u16
+
+Scan codes Values
+
+S = Actual scancode (10 bits) Key Scan codes can go as high as 0x2ff
+D = Is pressed down (1), or released (0) (1 bit)
+ I = input device ID (5 bits)
+ 
+ . DIII IISS SSSS SSSS
+ 
+// untested... 
+
+    input_id = (raw_scancode >> 10 ) & ((2<< 5)-1)
+     scancode = (raw_scancode >>  0 ) & ((2<<10)-1)
+      pressed  = (raw_scancode >> 15 ) & ((2<< 1)-1)
+      
+      
+*/
+
+/* Thoughts on keyboard input...
+I think the ideal API for keyboard would be to 
+just have the application tell the display server
+all the keybinds it needs, and then the display
+server will do the work of just telling the application
+when those keybinds have been triggered.
+
+However, it has come to my attention that some people
+will want raw access to the keyboard keys, I have
+wanted to avoid this because of the complexity that 
+internationalizaion brings, IE. the relationship betwee
+keycode and scancodes... but I think that for the raw
+access, we just will simply not even try to do the any
+processing on the scancodes, and then simply just pass
+the HW scancodes, and not any keycodes... its up to the 
+application to do the work to get the keycodes...
+
+
+X11 Keyboard layouts: https://github.com/freedesktop/xkeyboard-config 
+X11 compose key:   https://github.com/freedesktop/xorg-libX11/tree/master/nls 
+IME examples: https://wiki.archlinux.org/index.php/Localization/Japanese
+
+compute shaders: http://antongerdelan.net/opengl/compute.html
+
+
+
+
+*/
+
+// -----
+// STREAM : Talk about MMAP bug....  Talk about copy/repro
+// DONE: Server side OpenGL...
+// DONE: Look into why we need MAP_32BIT to prevent wierd memory corruption like-issues...
+// DONE: multiple clients???
+// DONE: Move and resize windows...
+// DONE: keyboard hotplugs via AF_NETLINK
+// DONE: enumerate keyboards from: /sys/class/input/
+// DONE: Handle hardware enumeration
+// DONE: internal mouse handling
+// DONE: Client focus notifications...
+// DONE: Client text  input
+// DONE: Client scancode input
+// DONE: Make mouse feel better.... When VSYNC is on...
+// DONE: Look into Latency
+// DONE: BUF: Need alignment padding for scancodes... or just put them before the text...
+// DONE: Fix colors for deesix
+// DONE: EGL on server
+// DONE: CLeanup SDL stuff...??? maybe?
+// DONE: BUG: When client is suspended, can we overflow on scancodes???
+// DONE: Actual client library?
+// DONE: Double check glibc dependancy...
+// DONE: Direct display configuration
+// DONE: Port to OpenGL 2.21 and OpenGL ES 2
+// DONE: Fix dropped input events.... probably start by tracking HWM EPF
+// DONE: Client API should probably handle multiple windows...
+// DONE: Client clients should probably have a way to do WaitEvent() like semantics
+
+
+
+
+
+
+
+
+
+
+
+
+
+SCRATCH:
+
+
+
+"GLES:2.0"
+"OPENGL:3.3"
+"COLOR_BITS:8,8,8,8"
+"DEPTH_BITS:8"
+"MSAA:4"
+"DEBUG"
+
+
+#if 0
+BARCLAY_DECL void barclay_window_config(int*config, size_t config_size, char*);
+
+#if 0
+
+int config[...];
+barclay_window_config(config, sizeof config, "OPENGL:3.3 MULTISAMPLING:4 DEBUG");
+auto window = barclay_window_init(config);
+
+
+#else
+#include "barclay_window_config.h" // has all the enums...
+
+int config[] = {
+    BARCLAY_GLAPI, BARCLAY_GLAPI_OPENGL,
+    BARCLAY_MAJOR, 3,
+    BARCLAY_MINOR, 3,
+    BARCLAY_MUTLISAMPLE, 1,
+    BARCLAY_MUTLISAMPLESAMPLES, 4,
+    BARCLAY_PROFILE, BARCLAY_GLAPI_PROFILE_DEBUG,
+    BARCLAY_NONE,
+};
+auto window = barclay_window_init(config);
+
+//#else 
+#include "barclay_window_config2.h" // has all the enums...
+
+
+BarclayWindowConfig2 config2 = {
+    .config_version = barclay_window_config2_VERSION,
+    .opengl_api = 3.3,
+    .multisampling = 4,
+    .debug = 1,
+}
+int config[...];
+barclay_window_config2(config, sizeof config, config2);
+
+#define BARCLAY_MAKE_CONFIG(m_config, ...) \
+{ BarclayWindowConfig2 config2 = { .config_version = barclay_window_config2_VERSION, __VA_ARGS__ }; \
+    barclay_window_config2(m_config, sizeof m_config, config2); }
+
+
+int config[...];
+BARCLAY_MAKE_CONFIG(config,
+                    .opengl_api = {3, 3},
+                    .multisampling = 4,
+                    .debug = 1);
+
+
+BARCLAY_MAKE_CONFIG(config,
+                    .opengles_api = {2, 0},
+                    .multisampling = 4,
+                    .debug = 1);
+
+
+
+BARCLAY_MAKE_CONFIG(config,
+                    .opengl2 = 0,
+                    .multisampling = 4,
+                    .debug = 1);
+
+
+BARCLAY_MAKE_CONFIG(config,
+                    .opengl4 = {3,2},
+                    .multisampling = 4,
+                    .debug = 1);
+
+BARCLAY_MAKE_CONFIG(config,
+                    .opengles2 = 0,
+                    .multisampling = 4,
+                    .debug = 1);
+
+
+int config[...];
+barclay_window_config2(config, sizeof config, config2);
+auto window = barclay_window_init(config);
+
+
+#endif
+
+#endif
+                    
+                    

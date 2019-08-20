@@ -1,0 +1,13 @@
+
+
+B=/coding/simple_os/display_server/junk
+
+cd $B
+wget https://dri.freedesktop.org/libdrm/libdrm-2.4.98.tar.bz2
+unar libdrm-2.4.98.tar.bz2
+cd $B/libdrm-2.4.98
+
+
+
+
+

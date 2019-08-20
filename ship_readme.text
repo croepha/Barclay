@@ -1,0 +1,59 @@
+
+Over the course of a couple weeks, in my spare time I wanted to explore what it would
+take to make a display server for Linux.  This is mostly for my own educational purposes
+but is also driven by the amount of complexity that exists on the Linux desktop.
+
+The current state is far from done, and really should just be considered a toy.
+There are probably lots of bugs and missing critical features.  The test_server.exec
+binary is not really a display server in the strictest sense.  It only does some of the
+work that a display server would need to do.  For example, instead of trying to render
+directly using the hardware, it instead uses another display server, and as part of that
+it depends on SDL2.  This shortcut allows me to easily develop and stream 
+without having to use virtualization.  This should be considered a temporary crutch, 
+and ideally eventually it will be more of what you would expect a display server to be.
+ I think the main things to see is the client API.
+
+Eventually I would like to continue removing complexity from the Linux desktop,
+removing system services like udev/dbus/pulseaudio/systemd/network-manager/
+  wpa_suplicant/Xorg/Wayland.  I have a lot of opinions about how to make this
+happen, but this is a lot of work for one person to do.  So I am looking for
+partners to colaborate with.  I stream somewhat regularly, check out some of my VODs
+at https://www.twitch.tv/croepha  to see if you think our coding styles will mesh well
+together.  Feel free to get in touch with me on the HMN irc.
+
+
+To run these binaries:
+
+# run the server as root, it will likely not work as non-root because it want to 
+#  open the input devices
+sudo ./test_server.exec
+
+# Also start the client, you should be able to start as many as you want
+
+LD_LIBRARY_PATH=. ./test_client.exec
+
+# If you want to compile the example code, just run the build.sh script
+
+sh build.sh
+
+Example source and binaries are free and unencumbered 
+software released into the public domain.
+Anyone is free to copy, modify, publish, use, compile, sell, or distribute this 
+software, either in source code form or as a compiled binary, for any purpose, 
+commercial or non-commercial, and by any means.
+In jurisdictions that recognize copyright laws, the author or authors of this 
+software dedicate any and all copyright interest in the software to the public 
+domain. We make this dedication for the benefit of the public at large and to 
+the detriment of our heirs and successors. We intend this dedication to be an 
+overt act of relinquishment in perpetuity of all present and future rights to 
+this software under copyright law.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN 
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION 
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+
