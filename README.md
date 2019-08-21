@@ -15,15 +15,15 @@ cleanup, and there is probably some old code hanging around.
 
 # BACKGROUND #
 
-I am not comfortable with the amout of complexity that exists in modern
+I am not comfortable with the amount of complexity that exists in modern
 desktop operating systems.  In an effort to simplify my own personal desktop
 experience, I wanted to try my hand at making a display server.
 
 
 # MORE RESOURCES #
 
-I occasionally work on this and other projects live on Twitch: https://www.twitch.tv/croepha
-I sometimes also announce things on Twitter: https://twitter.com/croepha
+- I occasionally work on this and other projects live on Twitch: https://www.twitch.tv/croepha
+- I sometimes also announce things on Twitter: https://twitter.com/croepha
 
 
 # FAQ #
