@@ -29,6 +29,7 @@ experience, I wanted to try my hand at making a display server.
 # FAQ #
 
 Q: Why not Wayland?
+
 A: I think that Wayland is a significant improvement over Xorg in a number of
 ways.  If anything I don't think that Wayland goes far enough.  I think that 
 wayland is still significantly more complex then it needs to be.
