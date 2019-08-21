@@ -1,6 +1,6 @@
 This is work-in-progress graphical display server for the Linux kernel.  This
-an attempt to create simpler alternatives to critical system services on
-Linux.  At the current state, its not as much a serious project but more of
+is an attempt to create simpler alternatives to critical system services on
+Linux.  At the current state, it's not as much a serious project but more of
 an exploration of what could be done different from existing solutions.
 
 The code in this repo is a little rough, much of it is in flux and needs some
@@ -32,6 +32,6 @@ Q: Why not Wayland?
 
 A: I think that Wayland is a significant improvement over Xorg in a number of
 ways.  If anything I don't think that Wayland goes far enough.  I think that 
-wayland is still significantly more complex then it needs to be.
+wayland is still significantly more complex than it needs to be.
 
 
