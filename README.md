@@ -1,4 +1,3 @@
-
 This is work-in-progress graphical display server for the Linux kernel.  This
 an attempt to create simpler alternatives to critical system services on
 Linux.  At the current state, its not as much a serious project but more of
